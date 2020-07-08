@@ -20,7 +20,7 @@ type blockProgressLogger struct {
 	receivedLogTx     int64
 	lastBlockLogTime  time.Time
 
-	subsystemLogger doglog.Logger
+	subsystemLogger dashlog.Logger
 	progressAction  string
 	sync.Mutex
 }
@@ -29,7 +29,7 @@ type blockProgressLogger struct {
 // The progress message is templated as follows:
 //  {progressAction} {numProcessed} {blocks|block} in the last {timePeriod}
 //  ({numTxs}, height {lastBlockHeight}, {lastBlockTimeStamp})
-func newBlockProgressLogger(progressMessage string, logger doglog.Logger) *blockProgressLogger {
+func newBlockProgressLogger(progressMessage string, logger dashlog.Logger) *blockProgressLogger {
 	return &blockProgressLogger{
 		lastBlockLogTime: time.Now(),
 		progressAction:   progressMessage,

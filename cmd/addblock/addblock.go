@@ -23,7 +23,7 @@ const (
 
 var (
 	cfg *config
-	log doglog.Logger
+	log dashlog.Logger
 )
 
 // loadBlockDB opens the block database and returns a handle to it.
@@ -69,7 +69,7 @@ func realMain() error {
 	cfg = tcfg
 
 	// Setup logging.
-	backendLogger := doglog.NewBackend(os.Stdout)
+	backendLogger := dashlog.NewBackend(os.Stdout)
 	defer os.Stdout.Sync()
 	log = backendLogger.Logger("MAIN")
 	database.UseLogger(backendLogger.Logger("BCDB"))

@@ -12,7 +12,7 @@ import (
 	"github.com/eager7/dashd/wire"
 )
 
-var log = doglog.Disabled
+var log = dashlog.Disabled
 
 const (
 	dbType = "ffldb"
@@ -65,7 +65,7 @@ func createDBDriver(args ...interface{}) (database.DB, error) {
 
 // useLogger is the callback provided during driver registration that sets the
 // current logger to the provided one.
-func useLogger(logger doglog.Logger) {
+func useLogger(logger dashlog.Logger) {
 	log = logger
 }
 

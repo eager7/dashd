@@ -21,7 +21,7 @@ const (
 )
 
 var (
-	log             doglog.Logger
+	log             dashlog.Logger
 	shutdownChannel = make(chan error)
 )
 
@@ -61,11 +61,11 @@ func loadBlockDB() (database.DB, error) {
 // around the fact that deferred functions do not run when os.Exit() is called.
 func realMain() error {
 	// Setup logging.
-	backendLogger := doglog.NewBackend(os.Stdout)
+	backendLogger := dashlog.NewBackend(os.Stdout)
 	defer os.Stdout.Sync()
 	log = backendLogger.Logger("MAIN")
 	dbLog := backendLogger.Logger("BCDB")
-	dbLog.SetLevel(doglog.LevelDebug)
+	dbLog.SetLevel(dashlog.LevelDebug)
 	database.UseLogger(dbLog)
 
 	// Setup the parser options and commands.

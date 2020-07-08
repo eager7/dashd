@@ -11,7 +11,7 @@ import (
 // log is a logger that is initialized with no output filters.  This
 // means the package will not perform any logging by default until the caller
 // requests it.
-var log doglog.Logger
+var log dashlog.Logger
 
 // The default amount of logging is none.
 func init() {
@@ -21,12 +21,12 @@ func init() {
 // DisableLog disables all library log output.  Logging output is disabled
 // by default until either UseLogger or SetLogWriter are called.
 func DisableLog() {
-	log = doglog.Disabled
+	log = dashlog.Disabled
 }
 
 // UseLogger uses a specified Logger to output package logging info.
 // This should be used in preference to SetLogWriter if the caller is also
-// using doglog.
-func UseLogger(logger doglog.Logger) {
+// using dashlog.
+func UseLogger(logger dashlog.Logger) {
 	log = logger
 }
