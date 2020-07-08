@@ -25,7 +25,7 @@ const (
 )
 
 var (
-	btcdHomeDir     = dogutil.AppDataDir("btcd", false)
+	btcdHomeDir     = dashutil.AppDataDir("btcd", false)
 	defaultDataDir  = filepath.Join(btcdHomeDir, "data")
 	knownDbTypes    = database.SupportedDrivers()
 	activeNetParams = &chaincfg.MainNetParams

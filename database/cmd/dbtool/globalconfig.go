@@ -17,7 +17,7 @@ import (
 )
 
 var (
-	btcdHomeDir     = dogutil.AppDataDir("btcd", false)
+	btcdHomeDir     = dashutil.AppDataDir("btcd", false)
 	knownDbTypes    = database.SupportedDrivers()
 	activeNetParams = &chaincfg.MainNetParams
 

@@ -67,7 +67,7 @@ const (
 )
 
 var (
-	defaultHomeDir     = dogutil.AppDataDir("btcd", false)
+	defaultHomeDir     = dashutil.AppDataDir("btcd", false)
 	defaultConfigFile  = filepath.Join(defaultHomeDir, defaultConfigFilename)
 	defaultDataDir     = filepath.Join(defaultHomeDir, defaultDataDirname)
 	knownDbTypes       = database.SupportedDrivers()
@@ -170,8 +170,8 @@ type config struct {
 	oniondial            func(string, string, time.Duration) (net.Conn, error)
 	dial                 func(string, string, time.Duration) (net.Conn, error)
 	addCheckpoints       []chaincfg.Checkpoint
-	miningAddrs          []dogutil.Address
-	minRelayTxFee        dogutil.Amount
+	miningAddrs          []dashutil.Address
+	minRelayTxFee        dashutil.Amount
 	whitelists           []*net.IPNet
 }
 
@@ -756,7 +756,7 @@ func loadConfig() (*config, []string, error) {
 	}
 
 	// Validate the the minrelaytxfee.
-	cfg.minRelayTxFee, err = dogutil.NewAmount(cfg.MinRelayTxFee)
+	cfg.minRelayTxFee, err = dashutil.NewAmount(cfg.MinRelayTxFee)
 	if err != nil {
 		str := "%s: invalid minrelaytxfee: %v"
 		err := fmt.Errorf(str, funcName, err)
@@ -868,9 +868,9 @@ func loadConfig() (*config, []string, error) {
 	}
 
 	// Check mining addresses are valid and saved parsed versions.
-	cfg.miningAddrs = make([]dogutil.Address, 0, len(cfg.MiningAddrs))
+	cfg.miningAddrs = make([]dashutil.Address, 0, len(cfg.MiningAddrs))
 	for _, strAddr := range cfg.MiningAddrs {
-		addr, err := dogutil.DecodeAddress(strAddr, activeNetParams.Params)
+		addr, err := dashutil.DecodeAddress(strAddr, activeNetParams.Params)
 		if err != nil {
 			str := "%s: mining address '%s' failed to decode: %v"
 			err := fmt.Errorf(str, funcName, strAddr, err)

@@ -96,8 +96,8 @@ func standardCoinbaseScript(nextBlockHeight int32, extraNonce uint64) ([]byte, e
 // createCoinbaseTx returns a coinbase transaction paying an appropriate
 // subsidy based on the passed block height to the provided address.
 func createCoinbaseTx(coinbaseScript []byte, nextBlockHeight int32,
-	addr dogutil.Address, mineTo []wire.TxOut,
-	net *chaincfg.Params) (*dogutil.Tx, error) {
+	addr dashutil.Address, mineTo []wire.TxOut,
+	net *chaincfg.Params) (*dashutil.Tx, error) {
 
 	// Create the script to pay to the provided payment address.
 	pkScript, err := txscript.PayToAddrScript(addr)
@@ -124,7 +124,7 @@ func createCoinbaseTx(coinbaseScript []byte, nextBlockHeight int32,
 			tx.AddTxOut(&mineTo[i])
 		}
 	}
-	return dogutil.NewTx(tx), nil
+	return dashutil.NewTx(tx), nil
 }
 
 // CreateBlock creates a new block building from the previous block with a
@@ -132,9 +132,9 @@ func createCoinbaseTx(coinbaseScript []byte, nextBlockHeight int32,
 // initialized), then the timestamp of the previous block will be used plus 1
 // second is used. Passing nil for the previous block results in a block that
 // builds off of the genesis block for the specified chain.
-func CreateBlock(prevBlock *dogutil.Block, inclusionTxs []*dogutil.Tx,
-	blockVersion int32, blockTime time.Time, miningAddr dogutil.Address,
-	mineTo []wire.TxOut, net *chaincfg.Params) (*dogutil.Block, error) {
+func CreateBlock(prevBlock *dashutil.Block, inclusionTxs []*dashutil.Tx,
+	blockVersion int32, blockTime time.Time, miningAddr dashutil.Address,
+	mineTo []wire.TxOut, net *chaincfg.Params) (*dashutil.Block, error) {
 
 	var (
 		prevHash      *chainhash.Hash
@@ -177,7 +177,7 @@ func CreateBlock(prevBlock *dogutil.Block, inclusionTxs []*dogutil.Tx,
 	}
 
 	// Create a new block ready to be solved.
-	blockTxns := []*dogutil.Tx{coinbaseTx}
+	blockTxns := []*dashutil.Tx{coinbaseTx}
 	if inclusionTxs != nil {
 		blockTxns = append(blockTxns, inclusionTxs...)
 	}
@@ -201,7 +201,7 @@ func CreateBlock(prevBlock *dogutil.Block, inclusionTxs []*dogutil.Tx,
 		return nil, errors.New("Unable to solve block")
 	}
 
-	utilBlock := dogutil.NewBlock(&block)
+	utilBlock := dashutil.NewBlock(&block)
 	utilBlock.SetHeight(blockHeight)
 	return utilBlock, nil
 }

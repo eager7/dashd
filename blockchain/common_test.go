@@ -59,8 +59,8 @@ func isSupportedDbType(dbType string) bool {
 
 // loadBlocks reads files containing bitcoin block data (gzipped but otherwise
 // in the format bitcoind writes) from disk and returns them as an array of
-// dogutil.Block.  This is largely borrowed from the test code in btcdb.
-func loadBlocks(filename string) (blocks []*dogutil.Block, err error) {
+// dashutil.Block.  This is largely borrowed from the test code in btcdb.
+func loadBlocks(filename string) (blocks []*dashutil.Block, err error) {
 	filename = filepath.Join("testdata/", filename)
 
 	var network = wire.MainNet
@@ -79,7 +79,7 @@ func loadBlocks(filename string) (blocks []*dogutil.Block, err error) {
 	}
 	defer fi.Close()
 
-	var block *dogutil.Block
+	var block *dashutil.Block
 
 	err = nil
 	for height := int64(1); err == nil; height++ {
@@ -105,7 +105,7 @@ func loadBlocks(filename string) (blocks []*dogutil.Block, err error) {
 		// read block
 		dr.Read(rbytes)
 
-		block, err = dogutil.NewBlockFromBytes(rbytes)
+		block, err = dashutil.NewBlockFromBytes(rbytes)
 		if err != nil {
 			return
 		}
