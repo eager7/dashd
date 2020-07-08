@@ -11,6 +11,12 @@ import (
 
 	"github.com/eager7/dashd/wire"
 )
+const (
+	DeploymentSegwit = 1
+	BIP0065Height = 1
+	DeploymentTestDummy = "DeploymentTestDummy"
+	DeploymentCSV = "DeploymentCSV"
+)
 // These variables are the chain proof-of-work limit parameters for each default
 // network.
 var (
@@ -66,6 +72,9 @@ type Params struct {
 	ResetMinDifficulty     bool
 	GenerateSupported      bool
 
+	BIP0034Height int32
+	BIP0065Height int32
+	BIP0066Height int32
 	// Checkpoints ordered from oldest to newest.
 	Checkpoints []Checkpoint
 

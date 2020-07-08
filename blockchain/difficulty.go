@@ -159,18 +159,18 @@ func CalcWork(bits uint32) *big.Int {
 func (b *BlockChain) calcEasiestDifficulty(bits uint32, duration time.Duration) uint32 {
 	// Convert types used in the calculations below.
 	durationVal := int64(duration / time.Second)
-	adjustmentFactor := big.NewInt(b.chainParams.RetargetAdjustmentFactor)
+	adjustmentFactor := big.NewInt(1)
 
 	// The test network rules allow minimum difficulty blocks after more
 	// than twice the desired amount of time needed to generate a block has
 	// elapsed.
-	if b.chainParams.ReduceMinDifficulty {
-		reductionTime := int64(b.chainParams.MinDiffReductionTime /
-			time.Second)
-		if durationVal > reductionTime {
-			return b.chainParams.PowLimitBits
-		}
-	}
+	//if b.chainParams.ReduceMinDifficulty {
+	//	reductionTime := int64(b.chainParams.MinDiffReductionTime /
+	//		time.Second)
+	//	if durationVal > reductionTime {
+	//		return b.chainParams.PowLimitBits
+	//	}
+	//}
 
 	// Since easier difficulty equates to higher numbers, the easiest
 	// difficulty for a given duration is the largest value possible given
@@ -230,21 +230,21 @@ func (b *BlockChain) calcNextRequiredDifficulty(lastNode *blockNode, newBlockTim
 		// For networks that support it, allow special reduction of the
 		// required difficulty once too much time has elapsed without
 		// mining a block.
-		if b.chainParams.ReduceMinDifficulty {
-			// Return minimum difficulty when more than the desired
-			// amount of time has elapsed without mining a block.
-			reductionTime := int64(b.chainParams.MinDiffReductionTime /
-				time.Second)
-			allowMinTime := lastNode.timestamp + reductionTime
-			if newBlockTime.Unix() > allowMinTime {
-				return b.chainParams.PowLimitBits, nil
-			}
-
-			// The block was mined within the desired timeframe, so
-			// return the difficulty for the last block which did
-			// not have the special minimum difficulty rule applied.
-			return b.findPrevTestNetDifficulty(lastNode), nil
-		}
+		//if b.chainParams.ReduceMinDifficulty {
+		//	// Return minimum difficulty when more than the desired
+		//	// amount of time has elapsed without mining a block.
+		//	reductionTime := int64(b.chainParams.MinDiffReductionTime /
+		//		time.Second)
+		//	allowMinTime := lastNode.timestamp + reductionTime
+		//	if newBlockTime.Unix() > allowMinTime {
+		//		return b.chainParams.PowLimitBits, nil
+		//	}
+		//
+		//	// The block was mined within the desired timeframe, so
+		//	// return the difficulty for the last block which did
+		//	// not have the special minimum difficulty rule applied.
+		//	return b.findPrevTestNetDifficulty(lastNode), nil
+		//}
 
 		// For the main network (or any unrecognized networks), simply
 		// return the previous block's difficulty requirements.
@@ -275,7 +275,7 @@ func (b *BlockChain) calcNextRequiredDifficulty(lastNode *blockNode, newBlockTim
 	// result.
 	oldTarget := CompactToBig(lastNode.bits)
 	newTarget := new(big.Int).Mul(oldTarget, big.NewInt(adjustedTimespan))
-	targetTimeSpan := int64(b.chainParams.TargetTimespan / time.Second)
+	targetTimeSpan := int64(time.Minute*10 / time.Second)
 	newTarget.Div(newTarget, big.NewInt(targetTimeSpan))
 
 	// Limit new value to the proof of work limit.
@@ -294,7 +294,7 @@ func (b *BlockChain) calcNextRequiredDifficulty(lastNode *blockNode, newBlockTim
 	log.Debugf("Actual timespan %v, adjusted timespan %v, target timespan %v",
 		time.Duration(actualTimespan)*time.Second,
 		time.Duration(adjustedTimespan)*time.Second,
-		b.chainParams.TargetTimespan)
+		time.Minute*10)
 
 	return newTargetBits, nil
 }

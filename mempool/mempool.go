@@ -931,7 +931,7 @@ func (mp *TxPool) maybeAcceptTransaction(tx *dashutil.Tx, isNew, rateLimit, reje
 	// segwit isn't active yet, then we won't accept it into the mempool as
 	// it can't be mined yet.
 	if tx.MsgTx().HasWitness() {
-		segwitActive, err := mp.cfg.IsDeploymentActive(chaincfg.DeploymentSegwit)
+		segwitActive, err := mp.cfg.IsDeploymentActive(1)
 		if err != nil {
 			return nil, nil, err
 		}

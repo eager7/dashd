@@ -377,7 +377,7 @@ func (b *BlockChain) calcSequenceLock(node *blockNode, tx *dashutil.Tx, utxoView
 		// Obtain the latest BIP9 version bits state for the
 		// CSV-package soft-fork deployment. The adherence of sequence
 		// locks depends on the current soft-fork state.
-		csvState, err := b.deploymentState(node.parent, chaincfg.DeploymentCSV)
+		csvState, err := b.deploymentState(node.parent, 0)
 		if err != nil {
 			return nil, err
 		}
@@ -1745,9 +1745,9 @@ func New(config *Config) (*BlockChain, error) {
 	}
 
 	params := config.ChainParams
-	targetTimespan := int64(params.TargetTimespan / time.Second)
-	targetTimePerBlock := int64(params.TargetTimePerBlock / time.Second)
-	adjustmentFactor := params.RetargetAdjustmentFactor
+	targetTimespan := int64(10*time.Minute / time.Second)
+	targetTimePerBlock := int64(10*time.Minute / time.Second)
+	adjustmentFactor := int64(1000)
 	b := BlockChain{
 		checkpoints:         config.Checkpoints,
 		checkpointsByHeight: checkpointsByHeight,
@@ -1765,7 +1765,7 @@ func New(config *Config) (*BlockChain, error) {
 		orphans:             make(map[chainhash.Hash]*orphanBlock),
 		prevOrphans:         make(map[chainhash.Hash][]*orphanBlock),
 		warningCaches:       newThresholdCaches(vbNumBits),
-		deploymentCaches:    newThresholdCaches(chaincfg.DefinedDeployments),
+		deploymentCaches:    newThresholdCaches(1),
 	}
 
 	// Initialize the chain state from the passed database.  When the db

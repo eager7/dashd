@@ -35,10 +35,10 @@ func SeedFromDNS(chainParams *chaincfg.Params, reqServices wire.ServiceFlag,
 
 	for _, dnsseed := range chainParams.DNSSeeds {
 		var host string
-		if !dnsseed.HasFiltering || reqServices == wire.SFNodeNetwork {
-			host = dnsseed.Host
+		if reqServices == wire.SFNodeNetwork {
+			host = dnsseed
 		} else {
-			host = fmt.Sprintf("x%x.%s", uint64(reqServices), dnsseed.Host)
+			host = fmt.Sprintf("x%x.%s", uint64(reqServices), dnsseed)
 		}
 
 		go func(host string) {

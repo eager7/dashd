@@ -606,7 +606,7 @@ mempoolLoop:
 	// so then this means that we'll include any transactions with witness
 	// data in the mempool, and also add the witness commitment as an
 	// OP_RETURN output in the coinbase transaction.
-	segwitState, err := g.chain.ThresholdState(chaincfg.DeploymentSegwit)
+	segwitState, err := g.chain.ThresholdState(1)
 	if err != nil {
 		return nil, err
 	}
@@ -909,13 +909,13 @@ func (g *BlkTmplGenerator) UpdateBlockTime(msgBlock *wire.MsgBlock) error {
 	msgBlock.Header.Timestamp = newTime
 
 	// Recalculate the difficulty if running on a network that requires it.
-	if g.chainParams.ReduceMinDifficulty {
-		difficulty, err := g.chain.CalcNextRequiredDifficulty(newTime)
-		if err != nil {
-			return err
-		}
-		msgBlock.Header.Bits = difficulty
-	}
+	//if g.chainParams.ReduceMinDifficulty {
+	//	difficulty, err := g.chain.CalcNextRequiredDifficulty(newTime)
+	//	if err != nil {
+	//		return err
+	//	}
+	//	msgBlock.Header.Bits = difficulty
+	//}
 
 	return nil
 }

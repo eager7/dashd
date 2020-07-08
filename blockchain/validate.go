@@ -192,12 +192,12 @@ func isBIP0030Node(node *blockNode) bool {
 // At the target block generation rate for the main network, this is
 // approximately every 4 years.
 func CalcBlockSubsidy(height int32, chainParams *chaincfg.Params) int64 {
-	if chainParams.SubsidyReductionInterval == 0 {
-		return baseSubsidy
-	}
+	//if chainParams.SubsidyReductionInterval == 0 {
+	//	return baseSubsidy
+	//}
 
 	// Equivalent to: baseSubsidy / 2^(height/subsidyHalvingInterval)
-	return baseSubsidy >> uint(height/chainParams.SubsidyReductionInterval)
+	return baseSubsidy >> 1
 }
 
 // CheckTransactionSanity performs some preliminary checks on a transaction to
@@ -699,15 +699,15 @@ func (b *BlockChain) checkBlockHeaderContext(header *wire.BlockHeader, prevNode 
 	// Reject outdated block versions once a majority of the network
 	// has upgraded.  These were originally voted on by BIP0034,
 	// BIP0065, and BIP0066.
-	params := b.chainParams
-	if header.Version < 2 && blockHeight >= params.BIP0034Height ||
-		header.Version < 3 && blockHeight >= params.BIP0066Height ||
-		header.Version < 4 && blockHeight >= params.BIP0065Height {
-
-		str := "new blocks with version %d are no longer valid"
-		str = fmt.Sprintf(str, header.Version)
-		return ruleError(ErrBlockVersionTooOld, str)
-	}
+	//params := b.chainParams
+	//if header.Version < 2 && blockHeight >= params.BIP0034Height ||
+	//	header.Version < 3 && blockHeight >= params.BIP0066Height ||
+	//	header.Version < 4 && blockHeight >= params.BIP0065Height {
+	//
+	//	str := "new blocks with version %d are no longer valid"
+	//	str = fmt.Sprintf(str, header.Version)
+	//	return ruleError(ErrBlockVersionTooOld, str)
+	//}
 
 	return nil
 }
@@ -736,83 +736,83 @@ func (b *BlockChain) checkBlockContext(block *dashutil.Block, prevNode *blockNod
 		// Obtain the latest state of the deployed CSV soft-fork in
 		// order to properly guard the new validation behavior based on
 		// the current BIP 9 version bits state.
-		csvState, err := b.deploymentState(prevNode, chaincfg.DeploymentCSV)
-		if err != nil {
-			return err
-		}
+		//csvState, err := b.deploymentState(prevNode, chaincfg.DeploymentCSV)
+		//if err != nil {
+		//	return err
+		//}
 
 		// Once the CSV soft-fork is fully active, we'll switch to
 		// using the current median time past of the past block's
 		// timestamps for all lock-time based checks.
-		blockTime := header.Timestamp
-		if csvState == ThresholdActive {
-			blockTime = prevNode.CalcPastMedianTime()
-		}
+		//blockTime := header.Timestamp
+		//if csvState == ThresholdActive {
+		//	blockTime = prevNode.CalcPastMedianTime()
+		//}
 
 		// The height of this block is one more than the referenced
 		// previous block.
-		blockHeight := prevNode.height + 1
+		//blockHeight := prevNode.height + 1
 
 		// Ensure all transactions in the block are finalized.
-		for _, tx := range block.Transactions() {
-			if !IsFinalizedTransaction(tx, blockHeight,
-				blockTime) {
-
-				str := fmt.Sprintf("block contains unfinalized "+
-					"transaction %v", tx.Hash())
-				return ruleError(ErrUnfinalizedTx, str)
-			}
-		}
-
-		// Ensure coinbase starts with serialized block heights for
-		// blocks whose version is the serializedHeightVersion or newer
-		// once a majority of the network has upgraded.  This is part of
-		// BIP0034.
-		if ShouldHaveSerializedBlockHeight(header) &&
-			blockHeight >= b.chainParams.BIP0034Height {
-
-			coinbaseTx := block.Transactions()[0]
-			err := checkSerializedHeight(coinbaseTx, blockHeight)
-			if err != nil {
-				return err
-			}
-		}
+		//for _, tx := range block.Transactions() {
+		//	if !IsFinalizedTransaction(tx, blockHeight,
+		//		blockTime) {
+		//
+		//		str := fmt.Sprintf("block contains unfinalized "+
+		//			"transaction %v", tx.Hash())
+		//		return ruleError(ErrUnfinalizedTx, str)
+		//	}
+		//}
+		//
+		//// Ensure coinbase starts with serialized block heights for
+		//// blocks whose version is the serializedHeightVersion or newer
+		//// once a majority of the network has upgraded.  This is part of
+		//// BIP0034.
+		//if ShouldHaveSerializedBlockHeight(header) &&
+		//	blockHeight >= b.chainParams.BIP0034Height {
+		//
+		//	coinbaseTx := block.Transactions()[0]
+		//	err := checkSerializedHeight(coinbaseTx, blockHeight)
+		//	if err != nil {
+		//		return err
+		//	}
+		//}
 
 		// Query for the Version Bits state for the segwit soft-fork
 		// deployment. If segwit is active, we'll switch over to
 		// enforcing all the new rules.
-		segwitState, err := b.deploymentState(prevNode,
-			chaincfg.DeploymentSegwit)
-		if err != nil {
-			return err
-		}
+		//segwitState, err := b.deploymentState(prevNode,
+		//	chaincfg.DeploymentSegwit)
+		//if err != nil {
+		//	return err
+		//}
 
 		// If segwit is active, then we'll need to fully validate the
 		// new witness commitment for adherence to the rules.
-		if segwitState == ThresholdActive {
-			// Validate the witness commitment (if any) within the
-			// block.  This involves asserting that if the coinbase
-			// contains the special commitment output, then this
-			// merkle root matches a computed merkle root of all
-			// the wtxid's of the transactions within the block. In
-			// addition, various other checks against the
-			// coinbase's witness stack.
-			if err := ValidateWitnessCommitment(block); err != nil {
-				return err
-			}
-
-			// Once the witness commitment, witness nonce, and sig
-			// op cost have been validated, we can finally assert
-			// that the block's weight doesn't exceed the current
-			// consensus parameter.
-			blockWeight := GetBlockWeight(block)
-			if blockWeight > MaxBlockWeight {
-				str := fmt.Sprintf("block's weight metric is "+
-					"too high - got %v, max %v",
-					blockWeight, MaxBlockWeight)
-				return ruleError(ErrBlockWeightTooHigh, str)
-			}
-		}
+		//if segwitState == ThresholdActive {
+		//	// Validate the witness commitment (if any) within the
+		//	// block.  This involves asserting that if the coinbase
+		//	// contains the special commitment output, then this
+		//	// merkle root matches a computed merkle root of all
+		//	// the wtxid's of the transactions within the block. In
+		//	// addition, various other checks against the
+		//	// coinbase's witness stack.
+		//	if err := ValidateWitnessCommitment(block); err != nil {
+		//		return err
+		//	}
+		//
+		//	// Once the witness commitment, witness nonce, and sig
+		//	// op cost have been validated, we can finally assert
+		//	// that the block's weight doesn't exceed the current
+		//	// consensus parameter.
+		//	blockWeight := GetBlockWeight(block)
+		//	if blockWeight > MaxBlockWeight {
+		//		str := fmt.Sprintf("block's weight metric is "+
+		//			"too high - got %v, max %v",
+		//			blockWeight, MaxBlockWeight)
+		//		return ruleError(ErrBlockWeightTooHigh, str)
+		//	}
+		//}
 	}
 
 	return nil
@@ -895,7 +895,7 @@ func CheckTransactionInputs(tx *dashutil.Tx, txHeight int32, utxoView *UtxoViewp
 		if utxo.IsCoinBase() {
 			originHeight := utxo.BlockHeight()
 			blocksSincePrev := txHeight - originHeight
-			coinbaseMaturity := int32(chainParams.CoinbaseMaturity)
+			coinbaseMaturity := int32(1)
 			if blocksSincePrev < coinbaseMaturity {
 				str := fmt.Sprintf("tried to spend coinbase "+
 					"transaction output %v from height %v "+
@@ -1024,12 +1024,12 @@ func (b *BlockChain) checkConnectBlock(node *blockNode, block *dashutil.Block, v
 	// BIP0034 is not yet active.  This is a useful optimization because the
 	// BIP0030 check is expensive since it involves a ton of cache misses in
 	// the utxoset.
-	if !isBIP0030Node(node) && (node.height < b.chainParams.BIP0034Height) {
-		err := b.checkBIP0030(node, block, view)
-		if err != nil {
-			return err
-		}
-	}
+	//if !isBIP0030Node(node) && (node.height < b.chainParams.BIP0034Height) {
+	//	err := b.checkBIP0030(node, block, view)
+	//	if err != nil {
+	//		return err
+	//	}
+	//}
 
 	// Load all of the utxos referenced by the inputs for all transactions
 	// in the block don't already exist in the utxo view from the database.
@@ -1050,7 +1050,7 @@ func (b *BlockChain) checkConnectBlock(node *blockNode, block *dashutil.Block, v
 	// Query for the Version Bits state for the segwit soft-fork
 	// deployment. If segwit is active, we'll switch over to enforcing all
 	// the new rules.
-	segwitState, err := b.deploymentState(node.parent, chaincfg.DeploymentSegwit)
+	segwitState, err := b.deploymentState(node.parent, 1)
 	if err != nil {
 		return err
 	}
@@ -1162,24 +1162,24 @@ func (b *BlockChain) checkConnectBlock(node *blockNode, block *dashutil.Block, v
 
 	// Enforce DER signatures for block versions 3+ once the historical
 	// activation threshold has been reached.  This is part of BIP0066.
-	blockHeader := &block.MsgBlock().Header
-	if blockHeader.Version >= 3 && node.height >= b.chainParams.BIP0066Height {
-		scriptFlags |= txscript.ScriptVerifyDERSignatures
-	}
-
-	// Enforce CHECKLOCKTIMEVERIFY for block versions 4+ once the historical
-	// activation threshold has been reached.  This is part of BIP0065.
-	if blockHeader.Version >= 4 && node.height >= b.chainParams.BIP0065Height {
-		scriptFlags |= txscript.ScriptVerifyCheckLockTimeVerify
-	}
-
-	// Enforce CHECKSEQUENCEVERIFY during all block validation checks once
-	// the soft-fork deployment is fully active.
-	csvState, err := b.deploymentState(node.parent, chaincfg.DeploymentCSV)
-	if err != nil {
-		return err
-	}
-	if csvState == ThresholdActive {
+	//blockHeader := &block.MsgBlock().Header
+	//if blockHeader.Version >= 3 && node.height >= b.chainParams.BIP0066Height {
+	//	scriptFlags |= txscript.ScriptVerifyDERSignatures
+	//}
+	//
+	//// Enforce CHECKLOCKTIMEVERIFY for block versions 4+ once the historical
+	//// activation threshold has been reached.  This is part of BIP0065.
+	//if blockHeader.Version >= 4 && node.height >= b.chainParams.BIP0065Height {
+	//	scriptFlags |= txscript.ScriptVerifyCheckLockTimeVerify
+	//}
+	//
+	//// Enforce CHECKSEQUENCEVERIFY during all block validation checks once
+	//// the soft-fork deployment is fully active.
+	//csvState, err := b.deploymentState(node.parent, chaincfg.DeploymentCSV)
+	//if err != nil {
+	//	return err
+	//}
+	if 1 == ThresholdActive {
 		// If the CSV soft-fork is now active, then modify the
 		// scriptFlags to ensure that the CSV op code is properly
 		// validated during the script checks bleow.

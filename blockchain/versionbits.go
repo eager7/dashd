@@ -6,8 +6,6 @@ package blockchain
 
 import (
 	"math"
-
-	"github.com/eager7/dashd/chaincfg"
 )
 
 const (
@@ -82,7 +80,7 @@ func (c bitConditionChecker) EndTime() uint64 {
 //
 // This is part of the thresholdConditionChecker interface implementation.
 func (c bitConditionChecker) RuleChangeActivationThreshold() uint32 {
-	return c.chain.chainParams.RuleChangeActivationThreshold
+	return 0
 }
 
 // MinerConfirmationWindow is the number of blocks in each threshold state
@@ -93,7 +91,7 @@ func (c bitConditionChecker) RuleChangeActivationThreshold() uint32 {
 //
 // This is part of the thresholdConditionChecker interface implementation.
 func (c bitConditionChecker) MinerConfirmationWindow() uint32 {
-	return c.chain.chainParams.MinerConfirmationWindow
+	return 0
 }
 
 // Condition returns true when the specific bit associated with the checker is
@@ -124,7 +122,7 @@ func (c bitConditionChecker) Condition(node *blockNode) (bool, error) {
 // test a specific deployment rule.  This is required for properly detecting
 // and activating consensus rule changes.
 type deploymentChecker struct {
-	deployment *chaincfg.ConsensusDeployment
+	deployment string
 	chain      *BlockChain
 }
 
@@ -140,7 +138,7 @@ var _ thresholdConditionChecker = deploymentChecker{}
 //
 // This is part of the thresholdConditionChecker interface implementation.
 func (c deploymentChecker) BeginTime() uint64 {
-	return c.deployment.StartTime
+	return 0
 }
 
 // EndTime returns the unix timestamp for the median block time after which an
@@ -152,7 +150,7 @@ func (c deploymentChecker) BeginTime() uint64 {
 //
 // This is part of the thresholdConditionChecker interface implementation.
 func (c deploymentChecker) EndTime() uint64 {
-	return c.deployment.ExpireTime
+	return 0
 }
 
 // RuleChangeActivationThreshold is the number of blocks for which the condition
@@ -163,7 +161,7 @@ func (c deploymentChecker) EndTime() uint64 {
 //
 // This is part of the thresholdConditionChecker interface implementation.
 func (c deploymentChecker) RuleChangeActivationThreshold() uint32 {
-	return c.chain.chainParams.RuleChangeActivationThreshold
+	return 0
 }
 
 // MinerConfirmationWindow is the number of blocks in each threshold state
@@ -174,7 +172,7 @@ func (c deploymentChecker) RuleChangeActivationThreshold() uint32 {
 //
 // This is part of the thresholdConditionChecker interface implementation.
 func (c deploymentChecker) MinerConfirmationWindow() uint32 {
-	return c.chain.chainParams.MinerConfirmationWindow
+	return 0
 }
 
 // Condition returns true when the specific bit defined by the deployment
@@ -182,7 +180,7 @@ func (c deploymentChecker) MinerConfirmationWindow() uint32 {
 //
 // This is part of the thresholdConditionChecker interface implementation.
 func (c deploymentChecker) Condition(node *blockNode) (bool, error) {
-	conditionMask := uint32(1) << c.deployment.BitNumber
+	conditionMask := uint32(1) << 1
 	version := uint32(node.version)
 	return (version&vbTopMask == vbTopBits) && (version&conditionMask != 0),
 		nil
@@ -202,8 +200,8 @@ func (b *BlockChain) calcNextBlockVersion(prevNode *blockNode) (int32, error) {
 	// that is either in the process of being voted on, or locked in for the
 	// activation at the next threshold window change.
 	expectedVersion := uint32(vbTopBits)
-	for id := 0; id < len(b.chainParams.Deployments); id++ {
-		deployment := &b.chainParams.Deployments[id]
+	for id := 0; id < 0; id++ {
+		deployment := ""
 		cache := &b.deploymentCaches[id]
 		checker := deploymentChecker{deployment: deployment, chain: b}
 		state, err := b.thresholdState(prevNode, checker, cache)
@@ -211,7 +209,7 @@ func (b *BlockChain) calcNextBlockVersion(prevNode *blockNode) (int32, error) {
 			return 0, err
 		}
 		if state == ThresholdStarted || state == ThresholdLockedIn {
-			expectedVersion |= uint32(1) << deployment.BitNumber
+			expectedVersion |= uint32(1) << 1
 		}
 	}
 	return int32(expectedVersion), nil

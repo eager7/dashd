@@ -1239,57 +1239,57 @@ func handleGetBlockChainInfo(s *rpcServer, cmd interface{}, closeChan <-chan str
 
 	// Finally, query the BIP0009 version bits state for all currently
 	// defined BIP0009 soft-fork deployments.
-	for deployment, deploymentDetails := range params.Deployments {
-		// Map the integer deployment ID into a human readable
-		// fork-name.
-		var forkName string
-		switch deployment {
-		case chaincfg.DeploymentTestDummy:
-			forkName = "dummy"
-
-		case chaincfg.DeploymentCSV:
-			forkName = "csv"
-
-		case chaincfg.DeploymentSegwit:
-			forkName = "segwit"
-
-		default:
-			return nil, &btcjson.RPCError{
-				Code: btcjson.ErrRPCInternal.Code,
-				Message: fmt.Sprintf("Unknown deployment %v "+
-					"detected", deployment),
-			}
-		}
-
-		// Query the chain for the current status of the deployment as
-		// identified by its deployment ID.
-		deploymentStatus, err := chain.ThresholdState(uint32(deployment))
-		if err != nil {
-			context := "Failed to obtain deployment status"
-			return nil, internalRPCError(err.Error(), context)
-		}
-
-		// Attempt to convert the current deployment status into a
-		// human readable string. If the status is unrecognized, then a
-		// non-nil error is returned.
-		statusString, err := softForkStatus(deploymentStatus)
-		if err != nil {
-			return nil, &btcjson.RPCError{
-				Code: btcjson.ErrRPCInternal.Code,
-				Message: fmt.Sprintf("unknown deployment status: %v",
-					deploymentStatus),
-			}
-		}
-
-		// Finally, populate the soft-fork description with all the
-		// information gathered above.
-		chainInfo.SoftForks.Bip9SoftForks[forkName] = &btcjson.Bip9SoftForkDescription{
-			Status:     strings.ToLower(statusString),
-			Bit:        deploymentDetails.BitNumber,
-			StartTime2: int64(deploymentDetails.StartTime),
-			Timeout:    int64(deploymentDetails.ExpireTime),
-		}
-	}
+	//for deployment, deploymentDetails := range params.Deployments {
+	//	// Map the integer deployment ID into a human readable
+	//	// fork-name.
+	//	var forkName string
+	//	switch deployment {
+	//	case chaincfg.DeploymentTestDummy:
+	//		forkName = "dummy"
+	//
+	//	case chaincfg.DeploymentCSV:
+	//		forkName = "csv"
+	//
+	//	case chaincfg.DeploymentSegwit:
+	//		forkName = "segwit"
+	//
+	//	default:
+	//		return nil, &btcjson.RPCError{
+	//			Code: btcjson.ErrRPCInternal.Code,
+	//			Message: fmt.Sprintf("Unknown deployment %v "+
+	//				"detected", deployment),
+	//		}
+	//	}
+	//
+	//	// Query the chain for the current status of the deployment as
+	//	// identified by its deployment ID.
+	//	deploymentStatus, err := chain.ThresholdState(uint32(deployment))
+	//	if err != nil {
+	//		context := "Failed to obtain deployment status"
+	//		return nil, internalRPCError(err.Error(), context)
+	//	}
+	//
+	//	// Attempt to convert the current deployment status into a
+	//	// human readable string. If the status is unrecognized, then a
+	//	// non-nil error is returned.
+	//	statusString, err := softForkStatus(deploymentStatus)
+	//	if err != nil {
+	//		return nil, &btcjson.RPCError{
+	//			Code: btcjson.ErrRPCInternal.Code,
+	//			Message: fmt.Sprintf("unknown deployment status: %v",
+	//				deploymentStatus),
+	//		}
+	//	}
+	//
+	//	// Finally, populate the soft-fork description with all the
+	//	// information gathered above.
+	//	chainInfo.SoftForks.Bip9SoftForks[forkName] = &btcjson.Bip9SoftForkDescription{
+	//		Status:     strings.ToLower(statusString),
+	//		Bit:        deploymentDetails.BitNumber,
+	//		StartTime2: int64(deploymentDetails.StartTime),
+	//		Timeout:    int64(deploymentDetails.ExpireTime),
+	//	}
+	//}
 
 	return chainInfo, nil
 }
@@ -2410,23 +2410,22 @@ func handleGetNetworkHashPS(s *rpcServer, cmd interface{}, closeChan <-chan stru
 
 	// Calculate the number of blocks per retarget interval based on the
 	// chain parameters.
-	blocksPerRetarget := int32(s.cfg.ChainParams.TargetTimespan /
-		s.cfg.ChainParams.TargetTimePerBlock)
+	//blocksPerRetarget := 1
 
 	// Calculate the starting block height based on the passed number of
 	// blocks.  When the passed value is negative, use the last block the
 	// difficulty changed as the starting height.  Also make sure the
 	// starting height is not before the beginning of the chain.
-	numBlocks := int32(120)
-	if c.Blocks != nil {
-		numBlocks = int32(*c.Blocks)
-	}
+	//numBlocks := int32(120)
+	//if c.Blocks != nil {
+	//	numBlocks = int32(*c.Blocks)
+	//}
 	var startHeight int32
-	if numBlocks <= 0 {
-		startHeight = endHeight - ((endHeight % blocksPerRetarget) + 1)
-	} else {
-		startHeight = endHeight - numBlocks
-	}
+	//if numBlocks <= 0 {
+	//	startHeight = endHeight - ((endHeight % blocksPerRetarget) + 1)
+	//} else {
+	//	startHeight = endHeight - numBlocks
+	//}
 	if startHeight < 0 {
 		startHeight = 0
 	}
