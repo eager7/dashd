@@ -14,6 +14,7 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/eager7/dashd v0.0.0-20200708084540-a316308713da/go.mod h1:EGLCLnpP6jFzG7IV7YXZztFhCRfpjzm8CERQ4vBHxnE=
 github.com/eager7/dashd v0.0.0-20200708092524-793caa7f779c/go.mod h1:fN+uyZ7Pg9oxB7Rz4JNTUK3EPF3SnC5psJSxYfpufT0=
+github.com/eager7/dashd v0.0.0-20200811085328-d74e7ae0e6ca/go.mod h1:0p8Xz7DCsbVA5tz5q5mtBEspKc1AdYZGkU6trjBM2IY=
 github.com/eager7/dashlog v0.0.0-20200708080715-dccb4e26949a h1:tAxhIxOyQAQc9CKB0OV5OqQAliqYQ2gHvchXrrSsYHI=
 github.com/eager7/dashlog v0.0.0-20200708080715-dccb4e26949a/go.mod h1:6cdKX7AZUh1KZrsknrClKA1Bb4NTdgYQiUMRkjFMRUo=
 github.com/eager7/dashutil v0.0.0-20200708084234-28d2373b32fe h1:D3i6U/zmPVOvBhrBbQd1RFiu2gqRFAho4Ev+gcv5tZE=
@@ -22,6 +23,8 @@ github.com/eager7/dashutil v0.0.0-20200708085459-f32542e73b14 h1:jYAmXtupDvCFAwp
 github.com/eager7/dashutil v0.0.0-20200708085459-f32542e73b14/go.mod h1:ueZtpU85DTZW1sEjIN/DYvTakINXIgJhzW0vbGHUjjI=
 github.com/eager7/dashutil v0.0.0-20200708093837-0f0226110075 h1:vnUUhPw3od1mXv3z5HUKBlnMPVuZFofB3+/hfK7uLN0=
 github.com/eager7/dashutil v0.0.0-20200708093837-0f0226110075/go.mod h1:H3eVo40rdAVGSy549SR9hIlEKzmykkzEe4q/F8sJdl0=
+github.com/eager7/dashutil v0.0.0-20200811085506-1008f67864af h1:z6YiT86hJ5lu07Weav4TkaWs97kFoSce6f9+xDuzf1Y=
+github.com/eager7/dashutil v0.0.0-20200811085506-1008f67864af/go.mod h1:OpIUSz9xd7fPGK8LmH32OZbA4mX28Rg6CDbjoA3HRb4=
 github.com/golang/protobuf v1.4.0-rc.1/go.mod h1:ceaxUfeHdC40wWswd/P6IGgMaK3YpKi5j83Wpe3EHw8=
 github.com/golang/protobuf v1.4.0-rc.1.0.20200221234624-67d41d38c208/go.mod h1:xKAWHe0F5eneWXFV3EuXVDTCmh+JuBKY0li0aMyXATA=
 github.com/golang/protobuf v1.4.0-rc.2/go.mod h1:LlEzMj4AhA7rCAGe4KMBDvJI+AwstrUpVNzEA03Pprs=
