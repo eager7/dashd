@@ -126,30 +126,37 @@ var MainNetParams = Params{
 	GenesisHash:            &genesisHash,
 	PowLimit:               mainPowLimit,
 	PowLimitBits:           0x1d00ffff,
-	SubsidyHalvingInterval: 210000,
+	SubsidyHalvingInterval: 210240,
 	ResetMinDifficulty:     false,
 	GenerateSupported:      false,
 
 	// Checkpoints ordered from oldest to newest.
 	Checkpoints: []Checkpoint{
-		{11111, newShaHashFromStr("0000000069e244f73d78e8fd29ba2fd2ed618bd6fa2ee92559f542fdb26e7c1d")},
-		{33333, newShaHashFromStr("000000002dd5588a74784eaa7ab0507a18ad16a236e7b1ce69f00d7ddfb5d0a6")},
-		{74000, newShaHashFromStr("0000000000573993a3c9e41ce34471c079dcf5f52a0e824a81e7f953b8661a20")},
-		{105000, newShaHashFromStr("00000000000291ce28027faea320c8d2b054b2e0fe44a773f3eefb151d6bdc97")},
-		{134444, newShaHashFromStr("00000000000005b12ffd4cd315cd34ffd4a594f430ac814c91184a0d42d2b0fe")},
-		{168000, newShaHashFromStr("000000000000099e61ea72015e79632f216fe6cb33d7899acb35b75c8303b763")},
-		{193000, newShaHashFromStr("000000000000059f452a5f7340de6682a977387c17010ff6e6c3bd83ca8b1317")},
-		{210000, newShaHashFromStr("000000000000048b95347e83192f69cf0366076336c639f9b7228e9ba171342e")},
-		{216116, newShaHashFromStr("00000000000001b4f4b433e81ee46494af945cf96014816a4e2370f11b23df4e")},
-		{225430, newShaHashFromStr("00000000000001c108384350f74090433e7fcf79a606b8e797f065b130575932")},
-		{250000, newShaHashFromStr("000000000000003887df1f29024b06fc2200b55f8af8f35453d7be294df2d214")},
-		{267300, newShaHashFromStr("000000000000000a83fbd660e918f218bf37edd92b748ad940483c7c116179ac")},
-		{279000, newShaHashFromStr("0000000000000001ae8c72a0b0c301f67e3afca10e819efa9041e458e9bd7e40")},
-		{300255, newShaHashFromStr("0000000000000000162804527c6e9b9f0563a280525f9d08c12041def0a0f3b2")},
-		{319400, newShaHashFromStr("000000000000000021c6052e9becade189495d1c539aa37c58917305fd15f13b")},
-		{343185, newShaHashFromStr("0000000000000000072b8bf361d01a6ba7d445dd024203fafc78768ed4368554")},
-		{352940, newShaHashFromStr("000000000000000010755df42dba556bb72be6a32f3ce0b6941ce4430152c9ff")},
-		{382320, newShaHashFromStr("00000000000000000a8dc6ed5b133d0eb2fd6af56203e4159789b092defd8ab2")},
+		{1500, newShaHashFromStr("0x000000aaf0300f59f49bc3e970bad15c11f961fe2347accffff19d96ec9778e3")},
+		{4991, newShaHashFromStr("0x000000003b01809551952460744d5dbb8fcbd6cbae3c220267bf7fa43f837367")},
+		{9918, newShaHashFromStr("0x00000000213e229f332c0ffbe34defdaa9e74de87f2d8d1f01af8d121c3c170b")},
+		{16912, newShaHashFromStr("0x00000000075c0d10371d55a60634da70f197548dbbfa4123e12abfcbc5738af9")},
+		{23912, newShaHashFromStr("0x0000000000335eac6703f3b1732ec8b2f89c3ba3a7889e5767b090556bb9a276")},
+		{35457, newShaHashFromStr("0x0000000000b0ae211be59b048df14820475ad0dd53b9ff83b010f71a77342d9f")},
+		{45479, newShaHashFromStr("0x000000000063d411655d590590e16960f15ceea4257122ac430c6fbe39fbf02d")},
+		{55895, newShaHashFromStr("0x0000000000ae4c53a43639a4ca027282f69da9c67ba951768a20415b6439a2d7")},
+		{68899, newShaHashFromStr("0x0000000000194ab4d3d9eeb1f2f792f21bb39ff767cb547fe977640f969d77b7")},
+		{74619, newShaHashFromStr("0x000000000011d28f38f05d01650a502cc3f4d0e793fbc26e2a2ca71f07dc3842")},
+		{75095, newShaHashFromStr("0x0000000000193d12f6ad352a9996ee58ef8bdc4946818a5fec5ce99c11b87f0d")},
+		{88805, newShaHashFromStr("0x00000000001392f1652e9bf45cd8bc79dc60fe935277cd11538565b4a94fa85f")},
+		{107996, newShaHashFromStr("0x00000000000a23840ac16115407488267aa3da2b9bc843e301185b7d17e4dc40")},
+		{137993, newShaHashFromStr("0x00000000000cf69ce152b1bffdeddc59188d7a80879210d6e5c9503011929c3c")},
+		{167996, newShaHashFromStr("0x000000000009486020a80f7f2cc065342b0c2fb59af5e090cd813dba68ab0fed")},
+		{207992, newShaHashFromStr("0x00000000000d85c22be098f74576ef00b7aa00c05777e966aff68a270f1e01a5")},
+		{312645, newShaHashFromStr("0x0000000000059dcb71ad35a9e40526c44e7aae6c99169a9e7017b7d84b1c2daf")},
+		{407452, newShaHashFromStr("0x000000000003c6a87e73623b9d70af7cd908ae22fee466063e4ffc20be1d2dbc")},
+		{523412, newShaHashFromStr("0x000000000000e54f036576a10597e0e42cc22a5159ce572f999c33975e121d4d")},
+		{523930, newShaHashFromStr("0x0000000000000bccdb11c2b1cfb0ecab452abf267d89b7f46eaf2d54ce6e652c")},
+		{750000, newShaHashFromStr("0x00000000000000b4181bbbdddbae464ce11fede5d0292fb63fdede1e7c8ab21c")},
+		{888900, newShaHashFromStr("0x0000000000000026c29d576073ab51ebd1d3c938de02e9a44c7ee9e16f82db28")},
+		{967800, newShaHashFromStr("0x0000000000000024e26c7df7e46d673724d223cf4ca2b2adc21297cc095600f4")},
+		{1067570, newShaHashFromStr("0x000000000000001e09926bcf5fa4513d23e870a34f74e38200db99eb3f5b7a70")},
+		{1167570, newShaHashFromStr("0x000000000000000fb7b1e9b81700283dff0f7d87cf458e5edfdae00c669de661")},
 	},
 
 	// Enforce current block version once majority of the network has
@@ -168,15 +175,15 @@ var MainNetParams = Params{
 	// Address encoding magics
 	PubKeyHashAddrID: 0x4c, // starts with X
 	ScriptHashAddrID: 0x10, // starts with 7
-	PrivateKeyID:     0x80, // starts with 5 (uncompressed) or K (compressed)
+	PrivateKeyID:     0xcc, // Dash private keys start with '7' or 'X'
 
 	// BIP32 hierarchical deterministic extended key magics
-	HDPrivateKeyID: [4]byte{0x04, 0x88, 0xad, 0xe4}, // starts with xprv
-	HDPublicKeyID:  [4]byte{0x04, 0x88, 0xb2, 0x1e}, // starts with xpub
+	HDPrivateKeyID: [4]byte{0x04, 0x88, 0xAD, 0xE4}, // starts with xprv
+	HDPublicKeyID:  [4]byte{0x04, 0x88, 0xB2, 0x1E}, // starts with xpub
 
 	// BIP44 coin type used in the hierarchical deterministic path for
 	// address generation.
-	HDCoinType: 0,
+	HDCoinType: 5,
 }
 
 // RegressionNetParams defines the network parameters for the regression test
@@ -245,13 +252,17 @@ var TestNet3Params = Params{
 	GenesisHash:            &testNet3GenesisHash,
 	PowLimit:               testNet3PowLimit,
 	PowLimitBits:           0x1d00ffff,
-	SubsidyHalvingInterval: 210000,
+	SubsidyHalvingInterval: 210240,
 	ResetMinDifficulty:     true,
 	GenerateSupported:      false,
 
 	// Checkpoints ordered from oldest to newest.
 	Checkpoints: []Checkpoint{
-		{546, newShaHashFromStr("000000002a936ca763904c3c35fce2f3556c559c0214345d31b1bcebf76acb70")},
+		{261, newShaHashFromStr("0x00000c26026d0815a7e2ce4fa270775f61403c040647ff2c3091f99e894a4618")},
+		{1999, newShaHashFromStr("0x00000052e538d27fa53693efe6fb6892a0c1d26c0235f599171c48a3cce553b1")},
+		{2999, newShaHashFromStr("0x0000024bc3f4f4cb30d29827c13d921ad77d2c6072e586c7f60d83c2722cdcc5")},
+		{96090, newShaHashFromStr("0x00000000033df4b94d17ab43e999caaf6c4735095cc77703685da81254d09bba")},
+		{200000, newShaHashFromStr("0x000000001015eb5ef86a8fe2b3074d947bc972c5befe32b28dd5ce915dc0d029")},
 	},
 
 	// Enforce current block version once majority of the network has
@@ -268,9 +279,9 @@ var TestNet3Params = Params{
 	RelayNonStdTxs: true,
 
 	// Address encoding magics
-	PubKeyHashAddrID: 0x6f, // starts with m or n
-	ScriptHashAddrID: 0xc4, // starts with 2
-	PrivateKeyID:     0xef, // starts with 9 (uncompressed) or c (compressed)
+	PubKeyHashAddrID: 0x8c, // Testnet Dash addresses start with 'y'
+	ScriptHashAddrID: 0x13, // Testnet Dash script addresses start with '8' or '9'
+	PrivateKeyID:     0xef, // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
 
 	// BIP32 hierarchical deterministic extended key magics
 	HDPrivateKeyID: [4]byte{0x04, 0x35, 0x83, 0x94}, // starts with tprv
